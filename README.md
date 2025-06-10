@@ -36,3 +36,8 @@ local image = PNG.newFromStream(data)
 -- and the image is treated as an instance, so it can be anywhere you want as a GUI
 image.Parent = Players.LocalPlayer.PlayerGui
 ```
+
+## Why does it take so long ?
+The part that is the longest is the Instance creation. For an image of 800 by 800 pixels, it needs to allocate 800 * 800 pixels (instances), which is 640 000 allocation of instance (huge)
+
+Optimising can be made in that part, but me is lazy.
