@@ -27,7 +27,8 @@ But it is possible to display anything so you can put anything on screen.
 ## Typical usage
 ```luau
 -- first, get any image on the web, and convert the string you get into a buffer:
-local content = Http:GetAsync("https://media.discordapp.net/attachments/675792739274850326/1376535762710954004/moi.png?ex=684974d4&is=68482354&hm=a30e6195460b171eb288944873a87253510c6153648c230758f0f9f614f5e725&=&quality=lossless&width=930&height=930")
+local link = "https://static.wikia.nocookie.net/character-stats-and-profiles/images/5/52/Sahur2.webp/revision/latest?cb=20250510085254"
+local content = Http:GetAsync(link)
 local data = buffer.fromstring(content)
 
 -- then, you can create an image from the data
