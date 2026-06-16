@@ -25,9 +25,14 @@ I can't do anything about it, neither roblox can. I don't support people that di
 But it is possible to display anything so you can put anything on screen.
 
 ## Typical usage
+(working example)
 ```luau
+local PNG = require("@game/ReplicatedStorage/LibPNG")
+local Players = game:GetService("Players")
+local Http = game:GetService("HttpService")
+
 -- first, get any image on the web, and convert the string you get into a buffer:
-local link = "https://static.wikia.nocookie.net/character-stats-and-profiles/images/5/52/Sahur2.webp/revision/latest?cb=20250510085254"
+local link = "https://pbs.twimg.com/media/HAQGK8kWwAAEGSt.png"
 local content = Http:GetAsync(link)
 local data = buffer.fromstring(content)
 
@@ -35,7 +40,19 @@ local data = buffer.fromstring(content)
 local image = PNG.newFromStream(data)
 
 -- and the image is treated as an instance, so it can be anywhere you want as a GUI
-image.Parent = Players.LocalPlayer.PlayerGui
+local function addImageToPlayerGui(player: Player)
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "CustomImageGui"
+	image.Parent = gui -- like that
+	gui.Parent = player.PlayerGui
+end
+
+-- since it's only server sided, you need to add it to each player
+-- but you compute the image one time
+Players.PlayerAdded:Connect(addImageToPlayerGui)
+for _, player in ipairs(Players:GetPlayers()) do
+	addImageToPlayerGui(player)
+end
 ```
 
 ## Why does it take so long ?
